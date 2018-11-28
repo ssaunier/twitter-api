@@ -21,3 +21,10 @@ class TestTweetViews(TestCase):
         self.assertEqual(response_tweet["id"], 1)
         self.assertEqual(response_tweet["text"], "First tweet")
         self.assertIsNotNone(response_tweet["created_at"])
+
+    def test_tweet_create(self):
+        response = self.client.post("/tweets", json={'text': 'New tweet!'})
+        created_tweet = response.json
+        self.assertEqual(response.status_code, 201)
+        self.assertEqual(created_tweet["id"], 1)
+        self.assertEqual(created_tweet["text"], "New tweet!")
