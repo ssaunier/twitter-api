@@ -8,7 +8,7 @@ install:
   - pip install pipenv
   - pipenv install --dev
 before_script:
-  - psql -c 'CREATE DATABASE twitter_api_flask_development;' -U postgres
+  - psql -c 'CREATE DATABASE twitter_api_flask_test;' -U postgres
 env:
   - DATABASE_URL="postgresql://localhost/twitter_api_flask"
 script:
