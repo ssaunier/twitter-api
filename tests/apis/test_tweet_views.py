@@ -37,3 +37,9 @@ class TestTweetViews(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(updated_tweet["id"], 1)
         self.assertEqual(updated_tweet["text"], "New text")
+
+    def test_tweet_delete(self):
+        first_tweet = Tweet("First tweet")
+        tweet_repository.add(first_tweet)
+        self.client.delete("/tweets/1")
+        self.assertIsNone(tweet_repository.get(1))

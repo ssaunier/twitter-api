@@ -13,6 +13,9 @@ class TweetRepository:
               return tweet
       return None
 
+    def remove(self, id):
+      self.tweets = [tweet for tweet in self.tweets if tweet.id != id]
+
     def clear(self):
       self.tweets = []
       self.next_id = 1

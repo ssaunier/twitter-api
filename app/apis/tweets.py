@@ -37,6 +37,14 @@ class Tweet(Resource):
             tweet.text = api.payload["text"]
             return tweet
 
+    def delete(self, id):
+        tweet = tweet_repository.get(id)
+        if tweet is None:
+            api.abort(404, "Tweet {} doesn't exist".format(id))
+        else:
+            tweet_repository.remove(id)
+            return None
+
 @api.route('')
 @api.response(422, 'Invalid tweet')
 class CreateTweet(Resource):
