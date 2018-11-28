@@ -1,0 +1,14 @@
+language: python
+python: 3.8
+cache: pip
+dist: xenial
+addons:
+  postgresql: "9.5"
+install:
+  - pip install pipenv
+  - pipenv install --dev
+before_script:
+  - psql -c 'CREATE DATABASE twitter_api_flask_development;' -U postgres
+script:
+  - pipenv run python manage.py db upgrade
+  - pipenv run nosetests
