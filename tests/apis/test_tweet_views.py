@@ -28,3 +28,12 @@ class TestTweetViews(TestCase):
         self.assertEqual(response.status_code, 201)
         self.assertEqual(created_tweet["id"], 1)
         self.assertEqual(created_tweet["text"], "New tweet!")
+
+    def test_tweet_update(self):
+        first_tweet = Tweet("First tweet")
+        tweet_repository.add(first_tweet)
+        response = self.client.patch("/tweets/1", json={'text': 'New text'})
+        updated_tweet = response.json
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(updated_tweet["id"], 1)
+        self.assertEqual(updated_tweet["text"], "New text")

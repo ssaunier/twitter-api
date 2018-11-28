@@ -23,8 +23,18 @@ class Tweet(Resource):
     def get(self, id):
         tweet = tweet_repository.get(id)
         if tweet is None:
-            api.abort(404,  "Tweet {} doesn't exist".format(id))
+            api.abort(404, "Tweet {} doesn't exist".format(id))
         else:
+            return tweet
+
+    @api.marshal_with(tweet, code=200)
+    @api.expect(new_tweet, validate=True)
+    def patch(self, id):
+        tweet = tweet_repository.get(id)
+        if tweet is None:
+            api.abort(404, "Tweet {} doesn't exist".format(id))
+        else:
+            tweet.text = api.payload["text"]
             return tweet
 
 @api.route('')
