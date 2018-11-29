@@ -1,6 +1,6 @@
 from flask_testing import TestCase
 from app import create_app, db
-from app.models import Tweet
+from app.models import Tweet, User
 
 class TestTweetViews(TestCase):
     def create_app(self):
@@ -17,8 +17,9 @@ class TestTweetViews(TestCase):
         db.drop_all()
 
     def test_read_many_tweets(self):
-        first_tweet = Tweet(text="First tweet")
-        second_tweet = Tweet('Second tweet')
+        user = User(username='ssaunier')
+        first_tweet = Tweet(text='First tweet', user=user)
+        second_tweet = Tweet(text='Second tweet', user=user)
         db.session.add(first_tweet)
         db.session.add(second_tweet)
         db.session.commit()
@@ -28,17 +29,20 @@ class TestTweetViews(TestCase):
         print(response_tweets)
 
         self.assertEqual(response.status_code, 200)
+        self.assertEqual(type(response_tweets), list)
         self.assertEqual(len(response_tweets), 2)
 
         response_first_tweet = response_tweets[0]
         self.assertEqual(response_first_tweet['id'], 1)
         self.assertEqual(response_first_tweet['text'], 'First tweet')
         self.assertIsNotNone(response_first_tweet['created_at'])
+        self.assertEqual(response_first_tweet['user']['username'], "ssaunier")
 
         response_second_tweet = response_tweets[1]
         self.assertEqual(response_second_tweet['id'], 2)
         self.assertEqual(response_second_tweet['text'], 'Second tweet')
         self.assertIsNotNone(response_second_tweet['created_at'])
+        self.assertEqual(response_second_tweet['user']['username'], "ssaunier")
 
     def test_read_one_tweet(self):
         first_tweet = Tweet(text="First tweet")

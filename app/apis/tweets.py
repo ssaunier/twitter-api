@@ -5,10 +5,18 @@ from app import db
 
 api = Namespace('tweets')  # Base route
 
+class JsonUser(fields.Raw):
+    def format(self, value):
+        return {
+            'username': value.username,
+            'email': value.email
+        }
+
 json_tweet = api.model('Tweet', {
     'id': fields.Integer(required=True),
     'text': fields.String(required=True, min_length=1),
     'created_at': fields.DateTime(required=True),
+    'user': JsonUser,
 })
 
 json_new_tweet = api.model('New tweet', {
@@ -37,6 +45,8 @@ class TweetResource(Resource):
         # No need to verify if 'text' is present in body, or if it is a valid string since we use validate=True
         # body has already been validated using json_new_tweet schema
         tweet.text = api.payload['text']
+        db.session.commit()
+
         return None, 204
 
     def delete(self, tweet_id):  # DELETE method
@@ -65,5 +75,5 @@ class TweetsResource(Resource):
     # Here we use marshal_list_with (instead of marshal_with) to return a list of tweets
     @api.marshal_list_with(json_tweet)
     def get(self):  # GET method
-        tweets = tweet_repository.get_all()
+        tweets = db.session.query(Tweet).all()
         return tweets, 200
