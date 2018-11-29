@@ -12,6 +12,13 @@ class JsonUser(fields.Raw):
             'email': value.email
         }
 
+class JsonUser(fields.Raw):
+    def format(self, value):
+        return {
+            'username': value.username,
+            'email': value.email
+        }
+
 json_tweet = api.model('Tweet', {
     'id': fields.Integer(required=True),
     'text': fields.String(required=True, min_length=1),
