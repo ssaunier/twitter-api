@@ -26,12 +26,17 @@ psql -U postgres -c "CREATE DATABASE flask_db_test"
 
 :point_right: Don't forget to create a `.env` file *in your project folder*, then add your `DATABASE_URL` as previously:
 ```
-DATABASE_URL="postgresql://postgres:<password_if_necessary>@localhost/flask_db"
+DATABASE_URL=postgresql://postgres:<password_if_necessary>@localhost/flask_db
 ```
 
 Ex:
 ```
 DATABASE_URL=postgresql://postgres:root@localhost/flask_db
+```
+
+:point_right: Don't forget to *start your redis server* and to add `REDIS_URL` to your `.env` file :
+```
+REDIS_URL=redis://localhost:6379
 ```
 
 :point_right: To launch the api :
