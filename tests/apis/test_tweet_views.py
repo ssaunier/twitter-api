@@ -39,7 +39,6 @@ class TestTweetViews(TestCase):
         db.session.commit()
         response = self.client.patch("/tweets/1", json={'text': 'New text'})
         updated_tweet = response.json
-        db.session.commit()
         self.assertEqual(response.status_code, 200)
         self.assertEqual(updated_tweet["id"], 1)
         self.assertEqual(updated_tweet["text"], "New text")
@@ -50,3 +49,14 @@ class TestTweetViews(TestCase):
         db.session.commit()
         self.client.delete("/tweets/1")
         self.assertIsNone(db.session.query(Tweet).get(1))
+
+    def test_tweet_show_all(self):
+        first_tweet = Tweet(text="First tweet")
+        second_tweet = Tweet(text="Second tweet")
+        db.session.add(first_tweet)
+        db.session.add(second_tweet)
+        db.session.commit()
+        response = self.client.get("/tweets")
+        second_tweet_detail = response[1].json
+        self.assertIsInstance(response, list)
+        self.assertEqual(second_tweet_detail["id"], 2)
