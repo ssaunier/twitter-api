@@ -26,9 +26,9 @@ class TweetResource(Resource):
         if tweet is None:
             api.abort(404, "Tweet {} doesn't exist".format(id))
         else:
-            return tweet
+            return tweet, 200
 
-    @api.marshal_with(json_tweet, code=200)
+    @api.marshal_with(json_tweet, code=201)
     @api.expect(json_new_tweet, validate=True)
     def patch(self, id):
         tweet = db.session.query(Tweet).get(id)
@@ -37,7 +37,7 @@ class TweetResource(Resource):
         else:
             tweet.text = api.payload["text"]
             db.session.commit()
-            return tweet
+            return tweet, 201
 
     def delete(self, id):
         tweet = db.session.query(Tweet).get(id)
@@ -46,7 +46,7 @@ class TweetResource(Resource):
         else:
             db.session.delete(tweet)
             db.session.commit()
-            return "Tweet {} has been deleted".format(id)
+            return "Tweet {} has been deleted".format(id), 200
 
 @api.route('')
 @api.response(422, 'Invalid tweet')
@@ -56,7 +56,7 @@ class TweetsResource(Resource):
     def get(self):
         tweets = db.session.query(Tweet).all()
         if len(tweets) > 0:
-            return tweets
+            return tweets, 200
         return "No tweet to display, start sharing with the world!", 404
 
 

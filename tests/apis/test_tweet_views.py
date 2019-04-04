@@ -39,7 +39,7 @@ class TestTweetViews(TestCase):
         db.session.commit()
         response = self.client.patch("/tweets/1", json={'text': 'New text'})
         updated_tweet = response.json
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 201)
         self.assertEqual(updated_tweet["id"], 1)
         self.assertEqual(updated_tweet["text"], "New text")
 
