@@ -1,7 +1,6 @@
 from flask_testing import TestCase
 from app import create_app
 from app.models import Tweet
-from app.db import tweet_repository
 
 class TestTweetViews(TestCase):
     def create_app(self):
