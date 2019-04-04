@@ -1,2 +1,2 @@
 release: python manage.py db upgrade
-web: gunicorn wsgi --access-logfile=-
+web: gunicorn wsgi:application --access-logfile=-
