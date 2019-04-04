@@ -45,7 +45,7 @@ class TweetResource(Resource):
         else:
             db.session.delete(tweet)
             db.session.commit()
-            return None
+            return "Tweet {} has been deleted".format(id)
 
 @api.route('')
 @api.response(422, 'Invalid tweet')
