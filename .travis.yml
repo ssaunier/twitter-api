@@ -1,0 +1,15 @@
+language: python
+python: 3.7
+cache: pip
+dist: xenial
+addons:
+  postgresql: 10
+install:
+  - pip install pipenv
+  - pipenv install --dev
+before_script:
+  - psql -c 'CREATE DATABASE twitter_api_flask_test;' -U postgres
+env:
+  - DATABASE_URL="postgresql://localhost/twitter_api_flask"
+script:
+  - pipenv run nosetests
