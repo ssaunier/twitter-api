@@ -13,3 +13,4 @@ env:
   - DATABASE_URL="postgresql://localhost/twitter_api_flask"
 script:
   - pipenv run nosetests
+
