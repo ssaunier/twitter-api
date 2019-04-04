@@ -54,10 +54,11 @@ class TweetsResource(Resource):
 
     @api.marshal_with(json_tweet)
     def get(self):
-        tweets = db.session.query(Tweet).all
-        if tweets is None:
-            return "No tweet to display, start sharing with the world!", 404
-        return tweets, 2
+        tweets = db.session.query(Tweet).all()
+        if len(tweets) > 0:
+            return tweets
+        return "No tweet to display, start sharing with the world!", 404
+
 
     @api.marshal_with(json_tweet, code=201)
     @api.expect(json_new_tweet, validate=True)

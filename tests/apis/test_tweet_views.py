@@ -57,6 +57,6 @@ class TestTweetViews(TestCase):
         db.session.add(second_tweet)
         db.session.commit()
         response = self.client.get("/tweets")
-        second_tweet_detail = response[1].json
-        self.assertIsInstance(response, list)
-        self.assertEqual(second_tweet_detail["id"], 2)
+        tweets = response.json
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(tweets[1]["id"], 2)
