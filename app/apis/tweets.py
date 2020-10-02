@@ -1,4 +1,4 @@
-from flask_restplus import Namespace, Resource, fields
+from flask_restx import Namespace, Resource, fields
 from flask import abort
 from app.db import tweet_repository
 from app.models import Tweet
