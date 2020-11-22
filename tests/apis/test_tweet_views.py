@@ -3,6 +3,7 @@ from app import create_app, db
 from app.models import Tweet, User
 
 class TestTweetViews(TestCase):
+
     def create_app(self):
         app = create_app()
         app.config['TESTING'] = True

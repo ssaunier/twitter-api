@@ -10,5 +10,4 @@ class TestHomeView(TestCase):
     def test_home(self):
         response = self.client.get('/hello')
         text = response.data.decode()
-        print(text)
-        self.assertIn('Goodbye', text)
+        self.assertIn("Goodbye", text)
