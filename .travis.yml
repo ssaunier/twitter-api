@@ -3,7 +3,7 @@ python: 3.8
 cache: pip
 dist: xenial
 addons:
-  postgresql: 10
+  postgresql: "10"
 install:
   - pip install pipenv
   - pipenv install --dev
