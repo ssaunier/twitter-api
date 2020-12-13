@@ -8,14 +8,17 @@ class TweetRepository:
         self.next_id += 1
 
     def get(self, id):
-      for tweet in self.tweets:
-          if tweet.id == id:
-              return tweet
-      return None
+        for tweet in self.tweets:
+            if tweet.id == id:
+                return tweet
+        return None
+
+    def get_all(self):
+        return self.tweets
 
     def remove(self, id):
-      self.tweets = [tweet for tweet in self.tweets if tweet.id != id]
+        self.tweets = [tweet for tweet in self.tweets if tweet.id != id]
 
     def clear(self):
-      self.tweets = []
-      self.next_id = 1
+        self.tweets = []
+        self.next_id = 1
